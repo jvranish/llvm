@@ -44,6 +44,7 @@ module LLVM.Core.Instructions(
     bitcast, bitcastUnify,
     -- * Comparison
     CmpPredicate(..), IntPredicate(..), FPPredicate(..),
+    fromIntPredicate, toIntPredicate,
     CmpRet,
     cmp, pcmp, icmp, fcmp,
     select,

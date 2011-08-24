@@ -42,7 +42,7 @@ module LLVM.Core(
     -- * Extra types
     module LLVM.Core.Data,
     -- * Values and constants
-    Value, ConstValue, valueOf, constOf, value,
+    Value(..), ConstValue, valueOf, constOf, value,
     zero, allOnes, undef,
     createString, createStringNul,
     withString, withStringNul,

@@ -35,7 +35,8 @@ module LLVM.Core.Util(
     -- * Transformation passes
     addCFGSimplificationPass, addConstantPropagationPass, addDemoteMemoryToRegisterPass,
     addGVNPass, addInstructionCombiningPass, addPromoteMemoryToRegisterPass, addReassociatePass,
-    addTargetData
+    addTargetData,
+    getElementPtr0
     ) where
 import Data.Typeable
 import Data.List(intercalate)
@@ -494,3 +495,9 @@ getDep u = do
   producer <- FFI.getUsedValue u >>= getValueNameU
   consumer <- FFI.getUser u >>= getValueNameU
   return (producer, consumer)
+
+getElementPtr0 :: FFI.BuilderRef -> Value -> IO Value
+getElementPtr0 bldPtr ptr = do
+  withArrayLen [FFI.constInt FFI.int32Type 0 0, FFI.constInt FFI.int32Type 0 0] $ \ idxLen idxPtr ->
+    withEmptyCString $
+      FFI.buildGEP bldPtr ptr idxPtr (fromIntegral idxLen)
